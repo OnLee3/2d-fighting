@@ -5,8 +5,10 @@ export const drawCharacters = (
   characters: Character[]
 ) => {
   characters.forEach((char, i) => {
-    ctx.fillStyle = char.color;
-    ctx.fillRect(char.x, char.y, char.width, char.height);
+    if (char.gracePeriod % 2 === 0) {
+      ctx.fillStyle = char.color;
+      ctx.fillRect(char.x, char.y, char.width, char.height);
+    }
     ctx.fillStyle = "white";
     ctx.fillText(`HP: ${char.hp}`, char.x, char.y - 10);
 
