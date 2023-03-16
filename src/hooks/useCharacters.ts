@@ -36,11 +36,26 @@ export const moveCharacter = (
   deltaX: number,
   setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
 ) => {
-  setCharacters((prevCharacters) =>
-    prevCharacters.map((char, i) =>
+  setCharacters((prevCharacters) => {
+    const newCharacters = prevCharacters.map((char, i) =>
       i === index ? { ...char, x: char.x + deltaX } : char
-    )
-  );
+    );
+
+    const character1 = newCharacters[0];
+    const character2 = newCharacters[1];
+
+    if (
+      character1.x < character2.x + character2.width &&
+      character1.x + character1.width > character2.x &&
+      character1.y < character2.y + character2.height &&
+      character1.y + character1.height > character2.y
+    ) {
+      // If the characters are colliding, revert the position of the character that moved
+      return prevCharacters;
+    }
+
+    return newCharacters;
+  });
 };
 
 export const handleAttack = (
