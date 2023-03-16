@@ -34,59 +34,66 @@ const App: React.FC = () => {
     };
   }, [canvasRef, characters]);
 
-  useMultiKeyPress(["a", "d", "ArrowLeft", "ArrowRight"], (key: string) => {
-    switch (key) {
-      case "a":
-        moveCharacter(0, -5, setCharacters);
-        break;
-      case "d":
-        moveCharacter(0, 5, setCharacters);
-        break;
-      case "ArrowLeft":
-        moveCharacter(1, -5, setCharacters);
-        break;
-      case "ArrowRight":
-        moveCharacter(1, 5, setCharacters);
-        break;
-      default:
-        break;
-    }
-  });
-
-  useMultiKeyPress(["q", "p"], (key) => {
-    switch (key) {
-      case "q":
-        handleAttack(0, "right", setCharacters, () => {
-          if (attackTimeoutRef.current) {
-            clearTimeout(attackTimeoutRef.current);
-          }
-          attackTimeoutRef.current = setTimeout(() => {
-            setCharacters((prevCharacters) => {
-              const newCharacters = [...prevCharacters];
-              newCharacters[0].attacking = false;
-              return newCharacters;
+  useMultiKeyPress([
+    {
+      keys: ["a", "d", "ArrowLeft", "ArrowRight"],
+      callback: (key: string) => {
+        switch (key) {
+          case "a":
+            moveCharacter(0, -5, setCharacters);
+            break;
+          case "d":
+            moveCharacter(0, 5, setCharacters);
+            break;
+          case "ArrowLeft":
+            moveCharacter(1, -5, setCharacters);
+            break;
+          case "ArrowRight":
+            moveCharacter(1, 5, setCharacters);
+            break;
+          default:
+            break;
+        }
+      },
+    },
+    {
+      keys: ["q", "p"],
+      callback: (key) => {
+        switch (key) {
+          case "q":
+            handleAttack(0, "right", setCharacters, () => {
+              if (attackTimeoutRef.current) {
+                clearTimeout(attackTimeoutRef.current);
+              }
+              attackTimeoutRef.current = setTimeout(() => {
+                setCharacters((prevCharacters) => {
+                  const newCharacters = [...prevCharacters];
+                  newCharacters[0].attacking = false;
+                  return newCharacters;
+                });
+              }, 300);
             });
-          }, 300);
-        });
-        break;
-      case "p":
-        handleAttack(1, "left", setCharacters, () => {
-          if (attackTimeoutRef.current) {
-            clearTimeout(attackTimeoutRef.current);
-          }
-          attackTimeoutRef.current = setTimeout(() => {
-            setCharacters((prevCharacters) => {
-              const newCharacters = [...prevCharacters];
-              newCharacters[1].attacking = false;
-              return newCharacters;
+            break;
+          case "p":
+            handleAttack(1, "left", setCharacters, () => {
+              if (attackTimeoutRef.current) {
+                clearTimeout(attackTimeoutRef.current);
+              }
+              attackTimeoutRef.current = setTimeout(() => {
+                setCharacters((prevCharacters) => {
+                  const newCharacters = [...prevCharacters];
+                  newCharacters[1].attacking = false;
+                  return newCharacters;
+                });
+              }, 300);
             });
-          }, 300);
-        });
-        break;
-      default:
-        break;
-    }
-  });
+            break;
+          default:
+            break;
+        }
+      },
+    },
+  ]);
 
   return (
     <div className="App">
