@@ -38,7 +38,12 @@ export const moveCharacter = (
 ) => {
   setCharacters((prevCharacters) => {
     const newCharacters = prevCharacters.map((char, i) =>
-      i === index ? { ...char, x: char.x + deltaX } : char
+      i === index
+        ? {
+            ...char,
+            x: Math.max(0, Math.min(char.x + deltaX, 800 - char.width)),
+          }
+        : char
     );
 
     const character1 = newCharacters[0];
