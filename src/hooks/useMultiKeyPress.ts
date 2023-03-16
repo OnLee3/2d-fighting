@@ -11,6 +11,8 @@ export const useMultiKeyPress = (
         binding.keys.includes(event.key)
       );
       if (binding && !pressedKeys.has(event.key)) {
+        event.stopPropagation();
+        event.preventDefault();
         setPressedKeys((prevPressedKeys) => {
           const newPressedKeys = new Set(prevPressedKeys);
           newPressedKeys.add(event.key);
@@ -24,6 +26,8 @@ export const useMultiKeyPress = (
         binding.keys.includes(event.key)
       );
       if (binding) {
+        event.stopPropagation();
+        event.preventDefault();
         setPressedKeys((prevPressedKeys) => {
           const newPressedKeys = new Set(prevPressedKeys);
           newPressedKeys.delete(event.key);
