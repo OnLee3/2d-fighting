@@ -103,6 +103,10 @@ const App: React.FC = () => {
         height={400}
         style={{ border: "1px solid black" }}
       />
+      <Instructions>
+        <p>Player 1: Move: A/D | Attack: Q</p>
+        <p>Player 2: Move: Left/Right Arrows | Attack: P</p>
+      </Instructions>
     </div>
   );
 };
@@ -113,4 +117,15 @@ const StyledCanvas = styled.canvas`
   width: 100%;
   height: 100%;
   background-color: #222;
+`;
+
+const Instructions = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #000;
 `;
