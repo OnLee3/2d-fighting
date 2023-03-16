@@ -7,6 +7,7 @@ export interface Character {
   hp: number;
   attacking: boolean;
   attackDirection: AttackDirection;
+  gracePeriod: number;
 }
 
 export type AttackDirection = "left" | "right";

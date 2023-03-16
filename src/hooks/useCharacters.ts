@@ -11,6 +11,7 @@ const initialCharacters: Character[] = [
     hp: 100,
     attacking: false,
     attackDirection: "right",
+    gracePeriod: 0,
   },
   {
     x: 700,
@@ -21,6 +22,7 @@ const initialCharacters: Character[] = [
     hp: 100,
     attacking: false,
     attackDirection: "left",
+    gracePeriod: 0,
   },
 ];
 
@@ -77,6 +79,7 @@ export const handleAttack = (
     return newCharacters;
   });
 };
+
 const checkCollision = (
   attackerIndex: number,
   hitboxX: number,
@@ -96,11 +99,26 @@ const checkCollision = (
       hitboxY < target.y + target.height &&
       hitboxY + hitboxHeight > target.y
     ) {
-      const newCharacters = [...prevCharacters];
-      newCharacters[targetIndex].hp -= 10;
-      return newCharacters;
+      if (prevCharacters[targetIndex].gracePeriod === 0) {
+        const newCharacters = [...prevCharacters];
+        newCharacters[targetIndex].hp -= 10;
+        newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
+        return newCharacters;
+      }
     }
 
     return prevCharacters;
   });
+};
+
+export const decrementGracePeriods = (
+  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
+) => {
+  setCharacters((prevCharacters) =>
+    prevCharacters.map((char) =>
+      char.gracePeriod > 0
+        ? { ...char, gracePeriod: char.gracePeriod - 1 }
+        : char
+    )
+  );
 };

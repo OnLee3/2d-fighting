@@ -5,6 +5,7 @@ import {
   useCharacters,
   moveCharacter,
   handleAttack,
+  decrementGracePeriods,
 } from "./hooks/useCharacters";
 import { drawCharacters } from "./utils/drawCharacters";
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
 
     const gameLoop = setInterval(() => {
       draw();
+      decrementGracePeriods(setCharacters);
     }, 1000 / 60);
 
     return () => {
