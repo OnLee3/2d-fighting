@@ -11,7 +11,7 @@ import { drawCharacters } from "./utils/drawCharacters";
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { characters, setCharacters } = useCharacters();
-  const attackTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const attackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
