@@ -11,6 +11,7 @@ import { drawCharacters } from "./utils/drawCharacters";
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { characters, setCharacters } = useCharacters();
+  const attackTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -55,10 +56,32 @@ const App: React.FC = () => {
   useMultiKeyPress(["q", "p"], (key) => {
     switch (key) {
       case "q":
-        handleAttack(0, "right", setCharacters);
+        handleAttack(0, "right", setCharacters, () => {
+          if (attackTimeoutRef.current) {
+            clearTimeout(attackTimeoutRef.current);
+          }
+          attackTimeoutRef.current = setTimeout(() => {
+            setCharacters((prevCharacters) => {
+              const newCharacters = [...prevCharacters];
+              newCharacters[0].attacking = false;
+              return newCharacters;
+            });
+          }, 300);
+        });
         break;
       case "p":
-        handleAttack(1, "left", setCharacters);
+        handleAttack(1, "left", setCharacters, () => {
+          if (attackTimeoutRef.current) {
+            clearTimeout(attackTimeoutRef.current);
+          }
+          attackTimeoutRef.current = setTimeout(() => {
+            setCharacters((prevCharacters) => {
+              const newCharacters = [...prevCharacters];
+              newCharacters[1].attacking = false;
+              return newCharacters;
+            });
+          }, 300);
+        });
         break;
       default:
         break;

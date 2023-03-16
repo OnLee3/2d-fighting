@@ -44,16 +44,13 @@ export const moveCharacter = (
 export const handleAttack = (
   index: number,
   direction: AttackDirection,
-  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
+  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>,
+  onAttackEnd: () => void
 ) => {
   setCharacters((prevCharacters) => {
     const newCharacters = [...prevCharacters];
     newCharacters[index].attacking = true;
     newCharacters[index].attackDirection = direction;
-
-    setTimeout(() => {
-      newCharacters[index].attacking = false;
-    }, 300);
 
     const hitboxWidth = 40;
     const hitboxHeight = 10;
@@ -75,10 +72,11 @@ export const handleAttack = (
       setCharacters
     );
 
+    onAttackEnd();
+
     return newCharacters;
   });
 };
-
 const checkCollision = (
   attackerIndex: number,
   hitboxX: number,
