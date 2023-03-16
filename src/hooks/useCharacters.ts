@@ -69,7 +69,7 @@ export const handleAttack = (
     newCharacters[index].attacking = true;
     newCharacters[index].attackDirection = direction;
 
-    const hitboxWidth = 40;
+    const hitboxWidth = 120;
     const hitboxHeight = 10;
     const hitboxX =
       direction === "right"

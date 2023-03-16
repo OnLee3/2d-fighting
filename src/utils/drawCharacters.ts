@@ -12,7 +12,7 @@ export const drawCharacters = (
 
     if (char.attacking) {
       ctx.fillStyle = "yellow";
-      const hitboxWidth = 40;
+      const hitboxWidth = 120;
       const hitboxHeight = 10;
       const hitboxX =
         char.attackDirection === "right"
