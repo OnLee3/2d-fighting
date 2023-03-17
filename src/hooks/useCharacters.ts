@@ -1,144 +1,148 @@
-import { useState } from "react";
-import { Character, AttackDirection } from "../types";
+import { useState } from 'react';
+import { Character, AttackDirection } from '../types';
 
 export const initialCharacters: Character[] = [
-  {
-    x: 50,
-    y: 200,
-    width: 40,
-    height: 60,
-    color: "red",
-    hp: 100,
-    attacking: false,
-    attackDirection: "right",
-    gracePeriod: 0,
-  },
-  {
-    x: 700,
-    y: 200,
-    width: 40,
-    height: 60,
-    color: "blue",
-    hp: 100,
-    attacking: false,
-    attackDirection: "left",
-    gracePeriod: 0,
-  },
+    {
+        x: 50,
+        y: 200,
+        width: 40,
+        height: 60,
+        color: 'red',
+        hp: 100,
+        attacking: false,
+        attackDirection: 'right',
+        gracePeriod: 0,
+    },
+    {
+        x: 700,
+        y: 200,
+        width: 40,
+        height: 60,
+        color: 'blue',
+        hp: 100,
+        attacking: false,
+        attackDirection: 'left',
+        gracePeriod: 0,
+    },
 ];
 
 export const useCharacters = () => {
-  const [characters, setCharacters] = useState<Character[]>(initialCharacters);
-  return { characters, setCharacters };
+    const [characters, setCharacters] =
+        useState<Character[]>(initialCharacters);
+    return { characters, setCharacters };
 };
 
 export const moveCharacter = (
-  index: number,
-  deltaX: number,
-  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
+    index: number,
+    deltaX: number,
+    setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
 ) => {
-  setCharacters((prevCharacters) => {
-    const newCharacters = prevCharacters.map((char, i) =>
-      i === index
-        ? {
-            ...char,
-            x: Math.max(0, Math.min(char.x + deltaX, 800 - char.width)),
-          }
-        : char
-    );
+    setCharacters((prevCharacters) => {
+        const newCharacters = prevCharacters.map((char, i) =>
+            i === index
+                ? {
+                      ...char,
+                      x: Math.max(
+                          0,
+                          Math.min(char.x + deltaX, 800 - char.width)
+                      ),
+                  }
+                : char
+        );
 
-    const character1 = newCharacters[0];
-    const character2 = newCharacters[1];
+        const character1 = newCharacters[0];
+        const character2 = newCharacters[1];
 
-    if (
-      character1.x < character2.x + character2.width &&
-      character1.x + character1.width > character2.x &&
-      character1.y < character2.y + character2.height &&
-      character1.y + character1.height > character2.y
-    ) {
-      // If the characters are colliding, revert the position of the character that moved
-      return prevCharacters;
-    }
+        if (
+            character1.x < character2.x + character2.width &&
+            character1.x + character1.width > character2.x &&
+            character1.y < character2.y + character2.height &&
+            character1.y + character1.height > character2.y
+        ) {
+            // If the characters are colliding, revert the position of the character that moved
+            return prevCharacters;
+        }
 
-    return newCharacters;
-  });
+        return newCharacters;
+    });
 };
 
 export const handleAttack = (
-  index: number,
-  direction: AttackDirection,
-  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>,
-  onAttackEnd: () => void
+    index: number,
+    direction: AttackDirection,
+    setCharacters: React.Dispatch<React.SetStateAction<Character[]>>,
+    onAttackEnd: () => void
 ) => {
-  setCharacters((prevCharacters) => {
-    const newCharacters = [...prevCharacters];
-    newCharacters[index].attacking = true;
-    newCharacters[index].attackDirection = direction;
+    setCharacters((prevCharacters) => {
+        const newCharacters = [...prevCharacters];
+        newCharacters[index].attacking = true;
+        newCharacters[index].attackDirection = direction;
 
-    const hitboxWidth = 120;
-    const hitboxHeight = 10;
-    const hitboxX =
-      direction === "right"
-        ? newCharacters[index].x + newCharacters[index].width
-        : newCharacters[index].x - hitboxWidth;
-    const hitboxY =
-      newCharacters[index].y +
-      newCharacters[index].height / 2 -
-      hitboxHeight / 2;
+        const hitboxWidth = 120;
+        const hitboxHeight = 10;
+        const hitboxX =
+            direction === 'right'
+                ? newCharacters[index].x + newCharacters[index].width
+                : newCharacters[index].x - hitboxWidth;
+        const hitboxY =
+            newCharacters[index].y +
+            newCharacters[index].height / 2 -
+            hitboxHeight / 2;
 
-    checkCollision(
-      index,
-      hitboxX,
-      hitboxY,
-      hitboxWidth,
-      hitboxHeight,
-      setCharacters
-    );
+        checkCollision(
+            index,
+            hitboxX,
+            hitboxY,
+            hitboxWidth,
+            hitboxHeight,
+            setCharacters
+        );
 
-    onAttackEnd();
+        onAttackEnd();
 
-    return newCharacters;
-  });
+        return newCharacters;
+    });
 };
 
 const checkCollision = (
-  attackerIndex: number,
-  hitboxX: number,
-  hitboxY: number,
-  hitboxWidth: number,
-  hitboxHeight: number,
-  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
+    attackerIndex: number,
+    hitboxX: number,
+    hitboxY: number,
+    hitboxWidth: number,
+    hitboxHeight: number,
+    setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
 ) => {
-  const targetIndex = attackerIndex === 0 ? 1 : 0;
+    const targetIndex = attackerIndex === 0 ? 1 : 0;
 
-  setCharacters((prevCharacters) => {
-    const target = prevCharacters[targetIndex];
+    setCharacters((prevCharacters) => {
+        const target = prevCharacters[targetIndex];
 
-    if (
-      hitboxX < target.x + target.width &&
-      hitboxX + hitboxWidth > target.x &&
-      hitboxY < target.y + target.height &&
-      hitboxY + hitboxHeight > target.y
-    ) {
-      if (prevCharacters[targetIndex].gracePeriod === 0) {
-        const newCharacters = [...prevCharacters];
-        newCharacters[targetIndex].hp -= 20;
-        newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
-        return newCharacters;
-      }
-    }
+        if (
+            hitboxX < target.x + target.width &&
+            hitboxX + hitboxWidth > target.x &&
+            hitboxY < target.y + target.height &&
+            hitboxY + hitboxHeight > target.y
+        ) {
+            if (prevCharacters[targetIndex].gracePeriod === 0) {
+                const newCharacters = [...prevCharacters];
+                newCharacters[targetIndex].hp -= 20;
+                newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
+                return newCharacters;
+            }
+        }
 
-    return prevCharacters;
-  });
+        return prevCharacters;
+    });
 };
 
 export const decrementGracePeriods = (
-  setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
+    setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
 ) => {
-  setCharacters((prevCharacters) =>
-    prevCharacters.map((char) =>
-      char.gracePeriod > 0
-        ? { ...char, gracePeriod: char.gracePeriod - 1 }
-        : char
-    )
-  );
+    setCharacters((prevCharacters) =>
+        prevCharacters.map((char) =>
+            char.gracePeriod > 0
+                ? { ...char, gracePeriod: char.gracePeriod - 1 }
+                : char
+        )
+    );
 };
