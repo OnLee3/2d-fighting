@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useMultiKeyPress } from "./hooks/useMultiKeyPress";
 import {
@@ -6,6 +6,7 @@ import {
   moveCharacter,
   handleAttack,
   decrementGracePeriods,
+  initialCharacters,
 } from "./hooks/useCharacters";
 import { drawCharacters } from "./utils/drawCharacters";
 
@@ -13,27 +14,42 @@ const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { characters, setCharacters } = useCharacters();
   const attackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
 
-  useEffect(() => {
+  const resetGame = () => {
+    setCharacters(initialCharacters);
+    setWinnerIndex(null);
+  };
+
+  const update = () => {
+    decrementGracePeriods(setCharacters);
+    const winnerIndex = characters.findIndex((char) => char.hp <= 0);
+    if (winnerIndex !== -1) {
+      setWinnerIndex(winnerIndex === 0 ? 1 : 0);
+    }
+  };
+
+  const draw = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawCharacters(ctx, characters);
-    };
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawCharacters(ctx, characters);
+  };
 
-    const gameLoop = setInterval(() => {
-      draw();
-      decrementGracePeriods(setCharacters);
-    }, 1000 / 60);
+  const gameLoop = () => {
+    update();
+    draw();
+    if (winnerIndex === null) {
+      requestAnimationFrame(gameLoop);
+    }
+  };
 
-    return () => {
-      clearInterval(gameLoop);
-    };
+  useEffect(() => {
+    gameLoop();
   }, [canvasRef, characters]);
 
   useMultiKeyPress([
@@ -109,6 +125,12 @@ const App: React.FC = () => {
         <p>Player 1: Move: A/D | Attack: Q</p>
         <p>Player 2: Move: Left/Right Arrows | Attack: P</p>
       </Instructions>
+      {winnerIndex !== null && (
+        <GameOverOverlay>
+          <p>Player {winnerIndex + 1} Wins!</p>
+          <button onClick={resetGame}>Restart Game</button>
+        </GameOverOverlay>
+      )}
     </div>
   );
 };
@@ -130,4 +152,33 @@ const Instructions = styled.div`
   border-radius: 5px;
   font-size: 14px;
   color: #000;
+`;
+
+const GameOverOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+
+  p {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  button {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
 `;

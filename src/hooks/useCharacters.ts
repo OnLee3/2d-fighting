@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Character, AttackDirection } from "../types";
 
-const initialCharacters: Character[] = [
+export const initialCharacters: Character[] = [
   {
     x: 50,
     y: 200,
@@ -121,7 +121,7 @@ const checkCollision = (
     ) {
       if (prevCharacters[targetIndex].gracePeriod === 0) {
         const newCharacters = [...prevCharacters];
-        newCharacters[targetIndex].hp -= 10;
+        newCharacters[targetIndex].hp -= 20;
         newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
         return newCharacters;
       }
