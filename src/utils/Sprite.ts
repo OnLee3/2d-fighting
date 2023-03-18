@@ -34,7 +34,7 @@ export class Sprite {
         this.maxFrames = maxFrames;
     }
 
-    draw(
+    public draw(
         ctx: CanvasRenderingContext2D,
         x: number,
         y: number,

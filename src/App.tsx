@@ -38,12 +38,7 @@ const App: React.FC = () => {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const imageAspectRatio =
-            backgroundSprite.width / backgroundSprite.height;
-        const canvasHeight = canvas.width / imageAspectRatio;
-        canvas.height = canvasHeight;
         backgroundSprite.draw(ctx, 0, 0);
-
         drawCharacters(ctx, characters);
     }, [characters]);
 
