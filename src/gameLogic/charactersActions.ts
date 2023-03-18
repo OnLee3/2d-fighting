@@ -84,6 +84,17 @@ export const handleAttack = (
     });
 };
 
+export const handleAttackEnd = (
+    index: number,
+    setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
+) => {
+    setCharacters((prevCharacters) => {
+        const newCharacters = [...prevCharacters];
+        newCharacters[index].attacking = false;
+        return newCharacters;
+    });
+};
+
 const checkCollision = (
     attackerIndex: number,
     hitboxX: number,

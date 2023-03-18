@@ -3,6 +3,7 @@ import {
     handleAttack,
     moveEndCharacter,
     moveCharacter,
+    handleAttackEnd,
 } from '../gameLogic/charactersActions';
 import { Character } from '../types';
 import { useMultiKeyPress } from './useMultiKeyPress';
@@ -49,11 +50,7 @@ export const useGameControls = (
                         clearTimeout(attackTimeoutRef1.current);
                     }
                     attackTimeoutRef1.current = setTimeout(() => {
-                        setCharacters((prevCharacters) => {
-                            const newCharacters = [...prevCharacters];
-                            newCharacters[0].attacking = false;
-                            return newCharacters;
-                        });
+                        handleAttackEnd(0, setCharacters);
                     }, 300);
                 });
                 break;
@@ -63,11 +60,7 @@ export const useGameControls = (
                         clearTimeout(attackTimeoutRef2.current);
                     }
                     attackTimeoutRef2.current = setTimeout(() => {
-                        setCharacters((prevCharacters) => {
-                            const newCharacters = [...prevCharacters];
-                            newCharacters[1].attacking = false;
-                            return newCharacters;
-                        });
+                        handleAttackEnd(1, setCharacters);
                     }, 300);
                 });
                 break;
