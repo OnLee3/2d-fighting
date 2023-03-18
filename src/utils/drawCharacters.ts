@@ -1,5 +1,10 @@
 import { Character } from '../types';
-import { idleAnimation, idleAnimation2, runAnimation } from './Sprite';
+import {
+    idleAnimation,
+    idleAnimation2,
+    runAnimation,
+    runAnimation2,
+} from './Sprite';
 
 export const drawCharacters = (
     ctx: CanvasRenderingContext2D,
@@ -13,6 +18,8 @@ export const drawCharacters = (
                     ? char.moving
                         ? runAnimation
                         : idleAnimation
+                    : char.moving
+                    ? runAnimation2
                     : idleAnimation2;
             // Flip the Player 2 sprite
             const flip = i === 1;
