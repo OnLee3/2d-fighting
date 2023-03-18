@@ -148,6 +148,9 @@ const checkCollision = (
                 const newCharacters = [...prevCharacters];
                 newCharacters[targetIndex].hp -= 20;
                 newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
+                newCharacters[targetIndex].x =
+                    newCharacters[targetIndex].x +
+                    (attackerIndex === 0 ? 25 : -25);
                 return newCharacters;
             }
         }
