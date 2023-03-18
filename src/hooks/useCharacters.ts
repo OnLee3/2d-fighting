@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Character } from '../types';
-import { IDLE_SPRITE_WIDTH, IDLE_SPRIT_HEIGHT } from '../utils/Sprite';
 
 export const initialCharacters: Character[] = [
     {
         x: 50,
-        y: 345,
-        width: IDLE_SPRITE_WIDTH,
-        height: IDLE_SPRIT_HEIGHT,
+        y: 385,
+        width: 25,
+        height: 40,
         color: 'red',
         hp: 100,
         attacking: false,
@@ -18,9 +17,9 @@ export const initialCharacters: Character[] = [
     },
     {
         x: 700,
-        y: 345,
-        width: IDLE_SPRITE_WIDTH,
-        height: IDLE_SPRIT_HEIGHT,
+        y: 385,
+        width: 25,
+        height: 40,
         color: 'blue',
         hp: 100,
         attacking: false,
