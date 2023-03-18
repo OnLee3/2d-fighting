@@ -1,14 +1,33 @@
 import { Character } from '../types';
+import idleSprite from '../../assets/_idle.png';
+
+const idleImage = new Image();
+idleImage.src = idleSprite;
 
 export const drawCharacters = (
     ctx: CanvasRenderingContext2D,
     characters: Character[]
 ) => {
+    const spriteWidth = 1200;
+    const spriteHeight = 80;
+    const frameWidth = spriteWidth / 10;
+    const frameHeight = spriteHeight;
+
     characters.forEach((char, i) => {
         /** blinking when hit. */
         if (char.gracePeriod % 2 === 0) {
-            ctx.fillStyle = char.color;
-            ctx.fillRect(char.x, char.y, char.width, char.height);
+            const frameIndex = char.frame % 10;
+            ctx.drawImage(
+                idleImage,
+                frameIndex * frameWidth,
+                0,
+                frameWidth,
+                frameHeight,
+                char.x,
+                char.y,
+                frameWidth,
+                frameHeight
+            );
         }
         /** HP */
         ctx.fillStyle = 'white';

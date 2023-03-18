@@ -8,6 +8,7 @@ export interface Character {
     attacking: boolean;
     attackDirection: AttackDirection;
     gracePeriod: number;
+    frame: number;
 }
 
 export type AttackDirection = 'left' | 'right';

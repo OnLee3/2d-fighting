@@ -4,9 +4,9 @@ import { useCharacters, initialCharacters } from './hooks/useCharacters';
 import { drawCharacters } from './utils/drawCharacters';
 
 import { useGameLoop } from './hooks/useGameLoop';
-import { decrementGracePeriods } from './gameLogic/gracePeriod';
 import { useGameControls } from './hooks/useGameControls';
 import backgroundImage from '../assets/Background.png';
+import { updateCharacters } from './gameLogic/updateCharacters';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -21,7 +21,7 @@ const App: React.FC = () => {
     };
 
     const update = useCallback(() => {
-        decrementGracePeriods(setCharacters);
+        updateCharacters(setCharacters);
         const winnerIndex = characters.findIndex((char) => char.hp <= 0);
         if (winnerIndex !== -1) {
             setWinnerIndex(winnerIndex === 0 ? 1 : 0);
