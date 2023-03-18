@@ -1,5 +1,5 @@
-// Sprite.ts
 import idleSprite from '../../assets/_idle.png';
+import backgroundImage from '../../assets/Background.png';
 
 export class Sprite {
     image: HTMLImageElement;
@@ -12,8 +12,8 @@ export class Sprite {
         src: string,
         width: number,
         height: number,
-        offsetX: number,
-        offsetY: number
+        offsetX = 0,
+        offsetY = 0
     ) {
         this.image = new Image();
         this.image.src = src;
@@ -23,12 +23,7 @@ export class Sprite {
         this.offsetY = offsetY;
     }
 
-    draw(
-        ctx: CanvasRenderingContext2D,
-        x: number,
-        y: number,
-        frameIndex: number
-    ) {
+    draw(ctx: CanvasRenderingContext2D, x: number, y: number, frameIndex = 0) {
         ctx.drawImage(
             this.image,
             frameIndex * this.width + this.offsetX,
@@ -42,6 +37,15 @@ export class Sprite {
         );
     }
 }
+
+// Add these exports for the background sprite
+export const BACKGROUND_WIDTH = 928;
+export const BACKGROUND_HEIGHT = 500;
+export const backgroundSprite = new Sprite(
+    backgroundImage,
+    BACKGROUND_WIDTH,
+    BACKGROUND_HEIGHT
+);
 
 export const IDLE_SPRITE_WIDTH = 120;
 export const IDLE_SPRIT_HEIGHT = 80;

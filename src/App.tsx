@@ -1,19 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useCharacters, initialCharacters } from './hooks/useCharacters';
 import { drawCharacters } from './utils/drawCharacters';
-
 import { useGameLoop } from './hooks/useGameLoop';
 import { useGameControls } from './hooks/useGameControls';
-import backgroundImage from '../assets/Background.png';
 import { updateCharacters } from './gameLogic/updateCharacters';
+import {
+    backgroundSprite,
+    BACKGROUND_HEIGHT,
+    BACKGROUND_WIDTH,
+} from './utils/Sprite';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const { characters, setCharacters } = useCharacters();
     const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
-    const [backgroundImageElement, setBackgroundImageElement] =
-        useState<HTMLImageElement | null>(null);
 
     const resetGame = () => {
         setCharacters(initialCharacters);
@@ -37,38 +38,25 @@ const App: React.FC = () => {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (backgroundImageElement) {
-            const imageAspectRatio =
-                backgroundImageElement.width / backgroundImageElement.height;
-            const canvasHeight = canvas.width / imageAspectRatio;
-            canvas.height = canvasHeight;
-
-            ctx.drawImage(
-                backgroundImageElement,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-        }
+        const imageAspectRatio =
+            backgroundSprite.width / backgroundSprite.height;
+        const canvasHeight = canvas.width / imageAspectRatio;
+        canvas.height = canvasHeight;
+        backgroundSprite.draw(ctx, 0, 0);
 
         drawCharacters(ctx, characters);
-    }, [backgroundImageElement, characters]);
-
-    useEffect(() => {
-        const image = new Image();
-        image.src = backgroundImage;
-        image.onload = () => {
-            setBackgroundImageElement(image);
-        };
-    }, []);
+    }, [characters]);
 
     useGameLoop(update, draw);
     useGameControls(setCharacters);
 
     return (
         <div className="App">
-            <StyledCanvas ref={canvasRef} width={928} height={400} />
+            <StyledCanvas
+                ref={canvasRef}
+                width={BACKGROUND_WIDTH}
+                height={BACKGROUND_HEIGHT}
+            />
             <Instructions>
                 <p>Player 1: Move: A/D | Attack: Q</p>
                 <p>Player 2: Move: Left/Right Arrows | Attack: P</p>
