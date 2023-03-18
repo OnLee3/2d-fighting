@@ -1,7 +1,7 @@
-import idleSprite from '../../assets/_idle.png';
-import idleSprite2 from '../../assets/_idle_2.png';
-import runSprite from '../../assets/_run.png';
-import runSprite2 from '../../assets/_run_2.png';
+import idleSprite from '../../assets/_Idle.png';
+import idleSprite2 from '../../assets/_Idle_2.png';
+import runSprite from '../../assets/_Run.png';
+import runSprite2 from '../../assets/_Run_2.png';
 import backgroundImage from '../../assets/Background.png';
 
 export class Sprite {
