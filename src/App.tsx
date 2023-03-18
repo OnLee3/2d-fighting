@@ -53,8 +53,8 @@ const App: React.FC = () => {
                 height={BACKGROUND_HEIGHT}
             />
             <Instructions>
-                <p>Player 1: Move: A/D | Attack: Q</p>
-                <p>Player 2: Move: Left/Right Arrows | Attack: P</p>
+                <p>Player 1: Move: A/D | Attack: F</p>
+                <p>Player 2: Move: Left/Right Arrows | Attack: M</p>
             </Instructions>
             {winnerIndex !== null && (
                 <GameOverOverlay>

@@ -11,6 +11,7 @@ import { useMultiKeyPress } from './useMultiKeyPress';
 export const useGameControls = (
     setCharacters: Dispatch<SetStateAction<Character[]>>
 ) => {
+    const attackCooldowns = useRef(new Set<number>());
     const attackTimeoutRef1 = useRef<ReturnType<typeof setTimeout> | null>(
         null
     );
@@ -44,25 +45,33 @@ export const useGameControls = (
 
     const handleAttackKeyPress = (key: string) => {
         switch (key) {
-            case 'q':
-                handleAttack(0, 'right', setCharacters, () => {
-                    if (attackTimeoutRef1.current) {
-                        clearTimeout(attackTimeoutRef1.current);
-                    }
-                    attackTimeoutRef1.current = setTimeout(() => {
-                        handleAttackEnd(0, setCharacters);
-                    }, 300);
-                });
+            case 'f':
+                if (!attackCooldowns.current.has(0)) {
+                    attackCooldowns.current.add(0);
+                    handleAttack(0, 'right', setCharacters, () => {
+                        if (attackTimeoutRef1.current) {
+                            clearTimeout(attackTimeoutRef1.current);
+                        }
+                        attackTimeoutRef1.current = setTimeout(() => {
+                            handleAttackEnd(0, setCharacters);
+                            attackCooldowns.current.delete(0);
+                        }, 520);
+                    });
+                }
                 break;
-            case 'p':
-                handleAttack(1, 'left', setCharacters, () => {
-                    if (attackTimeoutRef2.current) {
-                        clearTimeout(attackTimeoutRef2.current);
-                    }
-                    attackTimeoutRef2.current = setTimeout(() => {
-                        handleAttackEnd(1, setCharacters);
-                    }, 300);
-                });
+            case 'm':
+                if (!attackCooldowns.current.has(1)) {
+                    attackCooldowns.current.add(1);
+                    handleAttack(1, 'left', setCharacters, () => {
+                        if (attackTimeoutRef2.current) {
+                            clearTimeout(attackTimeoutRef2.current);
+                        }
+                        attackTimeoutRef2.current = setTimeout(() => {
+                            handleAttackEnd(1, setCharacters);
+                            attackCooldowns.current.delete(1);
+                        }, 520);
+                    });
+                }
                 break;
             default:
                 break;
@@ -76,7 +85,7 @@ export const useGameControls = (
             keyUpCallback: handleMoveEnd,
         },
         {
-            keys: ['q', 'p'],
+            keys: ['f', 'm'],
             keyDownCallback: handleAttackKeyPress,
         },
     ]);

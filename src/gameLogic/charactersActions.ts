@@ -14,6 +14,10 @@ export const moveCharacter = (
     setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
 ) => {
     setCharacters((prevCharacters) => {
+        if (prevCharacters[index].attacking) {
+            return prevCharacters;
+        }
+
         const newCharacters = prevCharacters.map((char, i) =>
             i === index
                 ? {
@@ -49,8 +53,11 @@ export const moveEndCharacter = (
     index: number,
     setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
 ) => {
-    setCharacters((prevCharacters) =>
-        prevCharacters.map((char, i) =>
+    setCharacters((prevCharacters) => {
+        if (prevCharacters[index].attacking) {
+            return prevCharacters;
+        }
+        return prevCharacters.map((char, i) =>
             i === index
                 ? {
                       ...char,
@@ -61,8 +68,8 @@ export const moveEndCharacter = (
                       ...char,
                       sprite: i === 0 ? idleAnimation : idleAnimation2,
                   }
-        )
-    );
+        );
+    });
 };
 
 export const handleAttack = (
