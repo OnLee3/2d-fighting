@@ -1,4 +1,5 @@
 import idleSprite from '../../assets/_idle.png';
+import idleSprite2 from '../../assets/_idle_2.png';
 import backgroundImage from '../../assets/Background.png';
 
 export class Sprite {
@@ -23,18 +24,29 @@ export class Sprite {
         this.offsetY = offsetY;
     }
 
-    draw(ctx: CanvasRenderingContext2D, x: number, y: number, frameIndex = 0) {
+    draw(
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        frameIndex = 0,
+        flip = false
+    ) {
+        const scaleX = flip ? -1 : 1;
+
+        ctx.save();
+        ctx.scale(scaleX, 1);
         ctx.drawImage(
             this.image,
             frameIndex * this.width + this.offsetX,
             this.offsetY,
             this.width,
             this.height,
-            x,
+            x * scaleX,
             y,
-            this.width,
+            this.width * scaleX,
             this.height
         );
+        ctx.restore();
     }
 }
 
@@ -51,10 +63,19 @@ export const IDLE_SPRITE_WIDTH = 120;
 export const IDLE_SPRIT_HEIGHT = 80;
 export const IDLE_SPRITE_OFFSET_X = 40; // Adjust these values based on the actual padding in the sprite image
 export const IDLE_SPRITE_OFFSET_Y = 40;
+export const IDLE_SPRITE_2_OFFSET_X = -55; // Adjust these values based on the actual padding in the sprite image
+
 export const idleAnimation = new Sprite(
     idleSprite,
     IDLE_SPRITE_WIDTH,
     IDLE_SPRIT_HEIGHT,
     IDLE_SPRITE_OFFSET_X,
+    IDLE_SPRITE_OFFSET_Y
+);
+export const idleAnimation2 = new Sprite(
+    idleSprite2,
+    IDLE_SPRITE_WIDTH,
+    IDLE_SPRIT_HEIGHT,
+    IDLE_SPRITE_2_OFFSET_X,
     IDLE_SPRITE_OFFSET_Y
 );
