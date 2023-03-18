@@ -10,13 +10,15 @@ export class Sprite {
     height: number;
     offsetX: number;
     offsetY: number;
+    scale: number;
 
     constructor(
         src: string,
         width: number,
         height: number,
         offsetX = 0,
-        offsetY = 0
+        offsetY = 0,
+        scale = 1
     ) {
         this.image = new Image();
         this.image.src = src;
@@ -24,6 +26,7 @@ export class Sprite {
         this.height = height;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
+        this.scale = scale;
     }
 
     draw(
@@ -45,8 +48,8 @@ export class Sprite {
             this.height,
             x * scaleX,
             y,
-            this.width * scaleX,
-            this.height
+            this.width * this.scale * scaleX,
+            this.height * this.scale
         );
         ctx.restore();
     }
@@ -63,6 +66,7 @@ export const backgroundSprite = new Sprite(
 
 export const IDLE_SPRITE_WIDTH = 120;
 export const IDLE_SPRIT_HEIGHT = 80;
+export const IDLE_SPRIT_SCALE = 2;
 export const IDLE_SPRITE_OFFSET_X = 40; // Adjust these values based on the actual padding in the sprite image
 export const IDLE_SPRITE_OFFSET_Y = 40;
 export const IDLE_SPRITE_2_OFFSET_X = -50; // Adjust these values based on the actual padding in the sprite image
@@ -72,14 +76,16 @@ export const idleAnimation = new Sprite(
     IDLE_SPRITE_WIDTH,
     IDLE_SPRIT_HEIGHT,
     IDLE_SPRITE_OFFSET_X,
-    IDLE_SPRITE_OFFSET_Y
+    IDLE_SPRITE_OFFSET_Y,
+    IDLE_SPRIT_SCALE
 );
 export const idleAnimation2 = new Sprite(
     idleSprite2,
     IDLE_SPRITE_WIDTH,
     IDLE_SPRIT_HEIGHT,
     IDLE_SPRITE_2_OFFSET_X,
-    IDLE_SPRITE_OFFSET_Y
+    IDLE_SPRITE_OFFSET_Y,
+    IDLE_SPRIT_SCALE
 );
 
 export const runAnimation = new Sprite(
@@ -87,7 +93,8 @@ export const runAnimation = new Sprite(
     IDLE_SPRITE_WIDTH,
     IDLE_SPRIT_HEIGHT,
     IDLE_SPRITE_OFFSET_X,
-    IDLE_SPRITE_OFFSET_Y
+    IDLE_SPRITE_OFFSET_Y,
+    IDLE_SPRIT_SCALE
 );
 
 export const runAnimation2 = new Sprite(
@@ -95,5 +102,6 @@ export const runAnimation2 = new Sprite(
     IDLE_SPRITE_WIDTH,
     IDLE_SPRIT_HEIGHT,
     IDLE_SPRITE_2_OFFSET_X,
-    IDLE_SPRITE_OFFSET_Y
+    IDLE_SPRITE_OFFSET_Y,
+    IDLE_SPRIT_SCALE
 );

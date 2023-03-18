@@ -4,7 +4,7 @@ import { Character } from '../types';
 export const initialCharacters: Character[] = [
     {
         x: 50,
-        y: 385,
+        y: 345,
         width: 25,
         height: 40,
         color: 'red',
@@ -18,7 +18,7 @@ export const initialCharacters: Character[] = [
     },
     {
         x: 700,
-        y: 385,
+        y: 345,
         width: 25,
         height: 40,
         color: 'blue',
