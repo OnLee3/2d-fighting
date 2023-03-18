@@ -32,6 +32,29 @@ export const useGameControls = (
         }
     };
 
+    const handleMoveEnd = (key: string) => {
+        switch (key) {
+            case 'a':
+            case 'd':
+                setCharacters((prevCharacters) => {
+                    const newCharacters = [...prevCharacters];
+                    newCharacters[0].moving = false;
+                    return newCharacters;
+                });
+                break;
+            case 'ArrowLeft':
+            case 'ArrowRight':
+                setCharacters((prevCharacters) => {
+                    const newCharacters = [...prevCharacters];
+                    newCharacters[1].moving = false;
+                    return newCharacters;
+                });
+                break;
+            default:
+                break;
+        }
+    };
+
     const handleAttackKeyPress = (key: string) => {
         switch (key) {
             case 'q':
@@ -70,11 +93,12 @@ export const useGameControls = (
     useMultiKeyPress([
         {
             keys: ['a', 'd', 'ArrowLeft', 'ArrowRight'],
-            callback: handleMove,
+            keyDownCallback: handleMove,
+            keyUpCallback: handleMoveEnd,
         },
         {
             keys: ['q', 'p'],
-            callback: handleAttackKeyPress,
+            keyDownCallback: handleAttackKeyPress,
         },
     ]);
 };

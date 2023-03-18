@@ -14,6 +14,7 @@ export const moveCharacter = (
                           0,
                           Math.min(char.x + deltaX, 928 - char.width)
                       ),
+                      moving: true,
                   }
                 : char
         );

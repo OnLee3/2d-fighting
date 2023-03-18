@@ -1,5 +1,5 @@
 import { Character } from '../types';
-import { idleAnimation, idleAnimation2 } from './Sprite';
+import { idleAnimation, idleAnimation2, runAnimation } from './Sprite';
 
 export const drawCharacters = (
     ctx: CanvasRenderingContext2D,
@@ -8,7 +8,12 @@ export const drawCharacters = (
     characters.forEach((char, i) => {
         /** blinking when hit. */
         if (char.gracePeriod % 2 === 0) {
-            const animationSprite = i === 0 ? idleAnimation : idleAnimation2;
+            const animationSprite =
+                i === 0
+                    ? char.moving
+                        ? runAnimation
+                        : idleAnimation
+                    : idleAnimation2;
             // Flip the Player 2 sprite
             const flip = i === 1;
             const frameIndex = char.frame % 10;

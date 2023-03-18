@@ -1,5 +1,6 @@
 import idleSprite from '../../assets/_idle.png';
 import idleSprite2 from '../../assets/_idle_2.png';
+import runSprite from '../../assets/_run.png';
 import backgroundImage from '../../assets/Background.png';
 
 export class Sprite {
@@ -77,5 +78,13 @@ export const idleAnimation2 = new Sprite(
     IDLE_SPRITE_WIDTH,
     IDLE_SPRIT_HEIGHT,
     IDLE_SPRITE_2_OFFSET_X,
+    IDLE_SPRITE_OFFSET_Y
+);
+
+export const runAnimation = new Sprite(
+    runSprite,
+    IDLE_SPRITE_WIDTH,
+    IDLE_SPRIT_HEIGHT,
+    IDLE_SPRITE_OFFSET_X,
     IDLE_SPRITE_OFFSET_Y
 );

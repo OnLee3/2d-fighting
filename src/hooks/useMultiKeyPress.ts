@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 
 export const useMultiKeyPress = (
-    keyBindings: Array<{ keys: string[]; callback: (key: string) => void }>
+    keyBindings: Array<{
+        keys: string[];
+        keyDownCallback: (key: string) => void;
+        keyUpCallback?: (key: string) => void;
+    }>
 ) => {
     const [pressedKeys, setPressedKeys] = useState(new Set<string>());
 
@@ -29,6 +33,7 @@ export const useMultiKeyPress = (
                 event.stopPropagation();
                 event.preventDefault();
                 setPressedKeys((prevPressedKeys) => {
+                    binding.keyUpCallback?.(event.key);
                     const newPressedKeys = new Set(prevPressedKeys);
                     newPressedKeys.delete(event.key);
                     return newPressedKeys;
@@ -52,7 +57,7 @@ export const useMultiKeyPress = (
                     binding.keys.includes(key)
                 );
                 if (binding) {
-                    binding.callback(key);
+                    binding.keyDownCallback(key);
                 }
             });
         });

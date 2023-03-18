@@ -14,6 +14,7 @@ export const initialCharacters: Character[] = [
         gracePeriod: 0,
         frame: 0,
         frameCounter: 0,
+        moving: false,
     },
     {
         x: 700,
@@ -27,6 +28,7 @@ export const initialCharacters: Character[] = [
         gracePeriod: 0,
         frame: 0,
         frameCounter: 0,
+        moving: false,
     },
 ];
 
