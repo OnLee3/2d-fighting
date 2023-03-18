@@ -12,7 +12,7 @@ export const moveCharacter = (
                       ...char,
                       x: Math.max(
                           0,
-                          Math.min(char.x + deltaX, 800 - char.width)
+                          Math.min(char.x + deltaX, 928 - char.width)
                       ),
                   }
                 : char

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useCharacters, initialCharacters } from './hooks/useCharacters';
 import { drawCharacters } from './utils/drawCharacters';
@@ -6,11 +6,14 @@ import { drawCharacters } from './utils/drawCharacters';
 import { useGameLoop } from './hooks/useGameLoop';
 import { decrementGracePeriods } from './gameLogic/gracePeriod';
 import { useGameControls } from './hooks/useGameControls';
+import backgroundImage from '../assets/Background.png';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const { characters, setCharacters } = useCharacters();
     const [winnerIndex, setWinnerIndex] = useState<number | null>(null);
+    const [backgroundImageElement, setBackgroundImageElement] =
+        useState<HTMLImageElement | null>(null);
 
     const resetGame = () => {
         setCharacters(initialCharacters);
@@ -33,20 +36,39 @@ const App: React.FC = () => {
         if (!ctx) return;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (backgroundImageElement) {
+            const imageAspectRatio =
+                backgroundImageElement.width / backgroundImageElement.height;
+            const canvasHeight = canvas.width / imageAspectRatio;
+            canvas.height = canvasHeight;
+
+            ctx.drawImage(
+                backgroundImageElement,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+        }
+
         drawCharacters(ctx, characters);
-    }, [characters]);
+    }, [backgroundImageElement, characters]);
+
+    useEffect(() => {
+        const image = new Image();
+        image.src = backgroundImage;
+        image.onload = () => {
+            setBackgroundImageElement(image);
+        };
+    }, []);
 
     useGameLoop(update, draw);
     useGameControls(setCharacters);
 
     return (
         <div className="App">
-            <StyledCanvas
-                ref={canvasRef}
-                width={800}
-                height={400}
-                style={{ border: '1px solid black' }}
-            />
+            <StyledCanvas ref={canvasRef} width={928} height={400} />
             <Instructions>
                 <p>Player 1: Move: A/D | Attack: Q</p>
                 <p>Player 2: Move: Left/Right Arrows | Attack: P</p>
@@ -65,8 +87,6 @@ export default App;
 
 const StyledCanvas = styled.canvas`
     width: 100%;
-    height: 100%;
-    background-color: #222;
 `;
 
 const Instructions = styled.div`
