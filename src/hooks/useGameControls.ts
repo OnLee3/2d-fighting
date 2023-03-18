@@ -1,5 +1,9 @@
 import { SetStateAction, Dispatch, useRef } from 'react';
-import { handleAttack, moveCharacter } from '../gameLogic/charactersActions';
+import {
+    handleAttack,
+    moveEndCharacter,
+    moveCharacter,
+} from '../gameLogic/charactersActions';
 import { Character } from '../types';
 import { useMultiKeyPress } from './useMultiKeyPress';
 
@@ -33,26 +37,8 @@ export const useGameControls = (
     };
 
     const handleMoveEnd = (key: string) => {
-        switch (key) {
-            case 'a':
-            case 'd':
-                setCharacters((prevCharacters) => {
-                    const newCharacters = [...prevCharacters];
-                    newCharacters[0].moving = false;
-                    return newCharacters;
-                });
-                break;
-            case 'ArrowLeft':
-            case 'ArrowRight':
-                setCharacters((prevCharacters) => {
-                    const newCharacters = [...prevCharacters];
-                    newCharacters[1].moving = false;
-                    return newCharacters;
-                });
-                break;
-            default:
-                break;
-        }
+        const playerIndex = key === 'a' || key === 'd' ? 0 : 1;
+        moveEndCharacter(playerIndex, setCharacters);
     };
 
     const handleAttackKeyPress = (key: string) => {

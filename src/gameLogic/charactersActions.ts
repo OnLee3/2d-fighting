@@ -36,6 +36,17 @@ export const moveCharacter = (
     });
 };
 
+export const moveEndCharacter = (
+    index: number,
+    setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
+) => {
+    setCharacters((prevCharacters) =>
+        prevCharacters.map((char, i) =>
+            i === index ? { ...char, moving: false } : char
+        )
+    );
+};
+
 export const handleAttack = (
     index: number,
     direction: AttackDirection,
