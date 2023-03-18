@@ -1,3 +1,5 @@
+import { Sprite } from '../utils/Sprite';
+
 export interface Character {
     x: number;
     y: number;
@@ -11,6 +13,7 @@ export interface Character {
     frame: number;
     frameCounter: number;
     moving: boolean;
+    sprite: Sprite;
 }
 
 export type AttackDirection = 'left' | 'right';

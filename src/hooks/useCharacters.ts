@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Character } from '../types';
+import { idleAnimation, idleAnimation2 } from '../utils/Sprite';
 
 export const initialCharacters: Character[] = [
     {
@@ -15,6 +16,7 @@ export const initialCharacters: Character[] = [
         frame: 0,
         frameCounter: 0,
         moving: false,
+        sprite: idleAnimation,
     },
     {
         x: 700,
@@ -29,6 +31,7 @@ export const initialCharacters: Character[] = [
         frame: 0,
         frameCounter: 0,
         moving: false,
+        sprite: idleAnimation2,
     },
 ];
 

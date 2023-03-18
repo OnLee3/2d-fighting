@@ -1,4 +1,12 @@
 import { AttackDirection, Character } from '../types';
+import {
+    attackAnimation,
+    attackAnimation2,
+    idleAnimation,
+    idleAnimation2,
+    runAnimation,
+    runAnimation2,
+} from '../utils/Sprite';
 
 export const moveCharacter = (
     index: number,
@@ -15,6 +23,7 @@ export const moveCharacter = (
                           Math.min(char.x + deltaX, 928 - char.width)
                       ),
                       moving: true,
+                      sprite: i === 0 ? runAnimation : runAnimation2,
                   }
                 : char
         );
@@ -42,7 +51,16 @@ export const moveEndCharacter = (
 ) => {
     setCharacters((prevCharacters) =>
         prevCharacters.map((char, i) =>
-            i === index ? { ...char, moving: false } : char
+            i === index
+                ? {
+                      ...char,
+                      moving: false,
+                      sprite: i === 0 ? idleAnimation : idleAnimation2,
+                  }
+                : {
+                      ...char,
+                      sprite: i === 0 ? idleAnimation : idleAnimation2,
+                  }
         )
     );
 };
@@ -57,6 +75,9 @@ export const handleAttack = (
         const newCharacters = [...prevCharacters];
         newCharacters[index].attacking = true;
         newCharacters[index].attackDirection = direction;
+        newCharacters[index].frame = 0;
+        newCharacters[index].sprite =
+            index === 0 ? attackAnimation : attackAnimation2;
 
         const hitboxWidth = 120;
         const hitboxHeight = 10;
@@ -91,6 +112,8 @@ export const handleAttackEnd = (
     setCharacters((prevCharacters) => {
         const newCharacters = [...prevCharacters];
         newCharacters[index].attacking = false;
+        newCharacters[index].sprite =
+            index === 0 ? idleAnimation : idleAnimation2;
         return newCharacters;
     });
 };
