@@ -46,7 +46,7 @@ export const useMultiKeyPress = (
     }, [keyBindings, pressedKeys]);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const animationId = requestAnimationFrame(() => {
             pressedKeys.forEach((key) => {
                 const binding = keyBindings.find((binding) =>
                     binding.keys.includes(key)
@@ -55,10 +55,9 @@ export const useMultiKeyPress = (
                     binding.callback(key);
                 }
             });
-        }, 1000 / 60); // Call the callback every frame (60 FPS)
-
+        });
         return () => {
-            clearInterval(interval);
+            cancelAnimationFrame(animationId);
         };
     }, [pressedKeys, keyBindings]);
 };

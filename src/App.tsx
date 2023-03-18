@@ -40,16 +40,15 @@ const App: React.FC = () => {
         drawCharacters(ctx, characters);
     }, [characters]);
 
-    useEffect(() => {
-        const gameLoop = setInterval(() => {
-            update();
-            draw();
-        }, 1000 / 60);
-
-        return () => {
-            clearInterval(gameLoop);
-        };
+    const gameLoop = useCallback(() => {
+        update();
+        draw();
     }, [update, draw]);
+
+    useEffect(() => {
+        const animationId = requestAnimationFrame(gameLoop);
+        return () => cancelAnimationFrame(animationId);
+    }, [gameLoop]);
 
     useMultiKeyPress([
         {
