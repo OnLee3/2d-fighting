@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
-import {
-    useCharacters,
-    decrementGracePeriods,
-    initialCharacters,
-} from './hooks/useCharacters';
+import { useCharacters, initialCharacters } from './hooks/useCharacters';
 import { drawCharacters } from './utils/drawCharacters';
-import { useGameControls } from './hooks/gameLogic';
+
 import { useGameLoop } from './hooks/useGameLoop';
+import { decrementGracePeriods } from './gameLogic/gracePeriod';
+import { useGameControls } from './hooks/useGameControls';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
