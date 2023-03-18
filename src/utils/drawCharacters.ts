@@ -17,16 +17,16 @@ export const drawCharacters = (
         ctx.fillText(`HP: ${char.hp}`, char.x, char.y - 10);
 
         /** attack hitbox */
-        if (char.attacking) {
-            ctx.fillStyle = 'yellow';
-            const hitboxWidth = 120;
-            const hitboxHeight = 10;
-            const hitboxX =
-                char.attackDirection === 'right'
-                    ? char.x + char.width
-                    : char.x - hitboxWidth;
-            const hitboxY = char.y + char.height / 2 - hitboxHeight / 2;
-            ctx.fillRect(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
-        }
+        // if (char.attacking) {
+        //     ctx.fillStyle = 'yellow';
+        //     const hitboxWidth = 120;
+        //     const hitboxHeight = 10;
+        //     const hitboxX =
+        //         char.attackDirection === 'right'
+        //             ? char.x + char.width
+        //             : char.x - hitboxWidth;
+        //     const hitboxY = char.y + char.height / 2 - hitboxHeight / 2;
+        //     ctx.fillRect(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
+        // }
     });
 };

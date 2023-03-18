@@ -62,11 +62,23 @@ export const moveEndCharacter = (
                 ? {
                       ...char,
                       moving: false,
-                      sprite: i === 0 ? idleAnimation : idleAnimation2,
+                      sprite: char.attacking
+                          ? i === 0
+                              ? attackAnimation
+                              : attackAnimation2
+                          : i === 0
+                          ? idleAnimation
+                          : idleAnimation2,
                   }
                 : {
                       ...char,
-                      sprite: i === 0 ? idleAnimation : idleAnimation2,
+                      sprite: char.attacking
+                          ? i === 0
+                              ? attackAnimation
+                              : attackAnimation2
+                          : i === 0
+                          ? idleAnimation
+                          : idleAnimation2,
                   }
         );
     });
