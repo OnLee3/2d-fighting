@@ -9,6 +9,7 @@ export interface Character {
     attackDirection: AttackDirection;
     gracePeriod: number;
     frame: number;
+    frameCounter: number;
 }
 
 export type AttackDirection = 'left' | 'right';

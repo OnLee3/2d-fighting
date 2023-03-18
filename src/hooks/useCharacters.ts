@@ -13,6 +13,7 @@ export const initialCharacters: Character[] = [
         attackDirection: 'right',
         gracePeriod: 0,
         frame: 0,
+        frameCounter: 0,
     },
     {
         x: 700,
@@ -25,6 +26,7 @@ export const initialCharacters: Character[] = [
         attackDirection: 'left',
         gracePeriod: 0,
         frame: 0,
+        frameCounter: 0,
     },
 ];
 
