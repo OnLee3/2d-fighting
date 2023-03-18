@@ -7,6 +7,7 @@ import {
 } from './hooks/useCharacters';
 import { drawCharacters } from './utils/drawCharacters';
 import { useGameControls } from './hooks/gameLogic';
+import { useGameLoop } from './hooks/useGameLoop';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -37,16 +38,7 @@ const App: React.FC = () => {
         drawCharacters(ctx, characters);
     }, [characters]);
 
-    const gameLoop = useCallback(() => {
-        update();
-        draw();
-    }, [update, draw]);
-
-    useEffect(() => {
-        const animationId = requestAnimationFrame(gameLoop);
-        return () => cancelAnimationFrame(animationId);
-    }, [gameLoop]);
-
+    useGameLoop(update, draw);
     useGameControls(setCharacters);
 
     return (
