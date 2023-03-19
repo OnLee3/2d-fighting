@@ -7,6 +7,7 @@ import { useGameControls } from './hooks/useGameControls';
 import { updateCharacters } from './gameLogic/updateCharacters';
 import { backgroundSprite } from './utils/Sprite';
 import { BACKGROUND_HEIGHT, BACKGROUND_WIDTH } from './constants/dimensions';
+import { findWinner } from './gameLogic/findWinner';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -20,9 +21,9 @@ const App: React.FC = () => {
 
     const update = useCallback(() => {
         updateCharacters(setCharacters);
-        const winnerIndex = characters.findIndex((char) => char.hp <= 0);
-        if (winnerIndex !== -1) {
-            setWinnerIndex(winnerIndex === 0 ? 1 : 0);
+        const winnerIndex = findWinner(characters);
+        if (winnerIndex) {
+            setWinnerIndex(winnerIndex);
         }
     }, [characters, setCharacters]);
 
@@ -55,7 +56,11 @@ const App: React.FC = () => {
             </Instructions>
             {winnerIndex !== null && (
                 <GameOverOverlay>
-                    <p>Player {winnerIndex + 1} Wins!</p>
+                    {winnerIndex === -1 ? (
+                        <p>It's a draw!</p>
+                    ) : (
+                        <p>Player {winnerIndex + 1} Wins!</p>
+                    )}
                     <button onClick={resetGame}>Restart Game</button>
                 </GameOverOverlay>
             )}
