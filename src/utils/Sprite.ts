@@ -7,6 +7,11 @@ import attack from '../../assets/_Attack.png';
 import attack2 from '../../assets/_Attack_2.png';
 import Hit from '../../assets/_Hit.png';
 import Hit2 from '../../assets/_Hit_2.png';
+import Jump from '../../assets/_Jump.png';
+import Jump2 from '../../assets/_Jump_2.png';
+import Fall from '../../assets/_Fall.png';
+import Fall2 from '../../assets/_Fall_2.png';
+
 import { SpriteOptions } from '../types';
 import { BACKGROUND_HEIGHT, BACKGROUND_WIDTH } from '../constants/dimensions';
 import {
@@ -152,4 +157,44 @@ export const hitAnimation2 = new Sprite({
     offsetY: IDLE_SPRITE_OFFSET_Y,
     scale: ATTACK_SPRITE_SCALE,
     maxFrames: 1,
+});
+
+export const jumpAnimation = new Sprite({
+    src: Jump,
+    width: ATTACK_SPRITE_WIDTH,
+    height: ATTACK_SPRITE_HEIGHT,
+    offsetX: IDLE_SPRITE_OFFSET_X,
+    offsetY: IDLE_SPRITE_OFFSET_Y,
+    scale: ATTACK_SPRITE_SCALE,
+    maxFrames: 3,
+});
+
+export const jumpAnimation2 = new Sprite({
+    src: Jump2,
+    width: ATTACK_SPRITE_WIDTH,
+    height: ATTACK_SPRITE_HEIGHT,
+    offsetX: IDLE_SPRITE_OFFSET_X,
+    offsetY: IDLE_SPRITE_OFFSET_Y,
+    scale: ATTACK_SPRITE_SCALE,
+    maxFrames: 3,
+});
+
+export const fallAnimation = new Sprite({
+    src: Fall,
+    width: ATTACK_SPRITE_WIDTH,
+    height: ATTACK_SPRITE_HEIGHT,
+    offsetX: IDLE_SPRITE_OFFSET_X,
+    offsetY: IDLE_SPRITE_OFFSET_Y,
+    scale: ATTACK_SPRITE_SCALE,
+    maxFrames: 2,
+});
+
+export const fallAnimation2 = new Sprite({
+    src: Fall2,
+    width: ATTACK_SPRITE_WIDTH,
+    height: ATTACK_SPRITE_HEIGHT,
+    offsetX: IDLE_SPRITE_OFFSET_X,
+    offsetY: IDLE_SPRITE_OFFSET_Y,
+    scale: ATTACK_SPRITE_SCALE,
+    maxFrames: 2,
 });

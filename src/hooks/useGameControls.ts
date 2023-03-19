@@ -7,6 +7,7 @@ import {
     handleAttackEnd,
 } from '../gameLogic/charactersActions';
 import { Character } from '../types';
+import { jumpAnimation, jumpAnimation2 } from '../utils/Sprite';
 import { useMultiKeyPress } from './useMultiKeyPress';
 
 export const useGameControls = (
@@ -81,12 +82,21 @@ export const useGameControls = (
 
     const handleJump = (index: number) => {
         setCharacters((prevCharacters) => {
+            if (prevCharacters[index].attacking) {
+                return prevCharacters;
+            }
+
+            if (prevCharacters[index].gracePeriod >= 30) {
+                return prevCharacters;
+            }
+
             if (prevCharacters[index].y >= GROUND_HEIGHT) {
                 return prevCharacters.map((char, i) =>
                     i === index
                         ? {
                               ...char,
-                              velocityY: -15, // Jump strength
+                              velocityY: -12, // Jump strength
+                              //   sprite: i === 0 ? jumpAnimation : jumpAnimation2,
                           }
                         : char
                 );

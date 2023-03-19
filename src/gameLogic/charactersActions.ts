@@ -50,16 +50,18 @@ export const moveCharacter = (
         const character2 = newCharacters[1];
 
         if (
-            checkCollision({
-                x: character1.x,
-                y: character1.y,
-                width: character1.width,
-                height: character1.height,
-                targetX: character2.x,
-                targetY: character2.y,
-                targetWidth: character2.width,
-                targetHeight: character2.height,
-            })
+            // checkCollision({
+            //     x: character1.x,
+            //     y: character1.y,
+            //     width: character1.width,
+            //     height: character1.height,
+            //     targetX: character2.x,
+            //     targetY: character2.y,
+            //     targetWidth: character2.width,
+            //     targetHeight: character2.height,
+            // })
+            character1.x < character2.x + character2.width &&
+            character1.x + character1.width > character2.x
         ) {
             return prevCharacters;
         }
