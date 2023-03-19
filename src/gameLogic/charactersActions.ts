@@ -101,11 +101,15 @@ export const handleAttack = (
         newCharacters[index].frame = 0;
         newCharacters[index].sprite =
             index === 0 ? attackAnimation : attackAnimation2;
-
         const hitboxX =
             direction === 'right'
-                ? newCharacters[index].x + newCharacters[index].width
-                : newCharacters[index].x - HITBOX_WIDTH;
+                ? newCharacters[index].x +
+                  newCharacters[index].sprite.width / 2 +
+                  newCharacters[index].width
+                : newCharacters[index].x +
+                  newCharacters[index].sprite.width / 2 -
+                  newCharacters[index].width -
+                  HITBOX_WIDTH;
         const hitboxY =
             newCharacters[index].y +
             newCharacters[index].height / 2 -
@@ -117,7 +121,9 @@ export const handleAttack = (
                 y: hitboxY,
                 width: HITBOX_WIDTH,
                 height: HITBOX_HEIGHT,
-                targetX: newCharacters[targetIndex].x,
+                targetX:
+                    newCharacters[targetIndex].x +
+                    newCharacters[index].sprite.width / 2,
                 targetY: newCharacters[targetIndex].y,
                 targetWidth: newCharacters[targetIndex].width,
                 targetHeight: newCharacters[targetIndex].height,

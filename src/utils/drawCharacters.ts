@@ -22,8 +22,8 @@ export const drawCharacters = (
             ctx.fillStyle = 'yellow';
             const hitboxX =
                 char.attackDirection === 'right'
-                    ? char.x + char.width
-                    : char.x - HITBOX_WIDTH;
+                    ? char.x + char.sprite.width + char.width
+                    : char.x + char.sprite.width - char.width - HITBOX_WIDTH;
             const hitboxY = char.y + char.height / 2 - HITBOX_HEIGHT / 2;
             ctx.fillRect(hitboxX, hitboxY, HITBOX_WIDTH, HITBOX_HEIGHT);
         }
