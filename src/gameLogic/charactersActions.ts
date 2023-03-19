@@ -40,12 +40,17 @@ export const moveCharacter = (
         const character2 = newCharacters[1];
 
         if (
-            character1.x < character2.x + character2.width &&
-            character1.x + character1.width > character2.x &&
-            character1.y < character2.y + character2.height &&
-            character1.y + character1.height > character2.y
+            checkCollision({
+                x: character1.x,
+                y: character1.y,
+                width: character1.width,
+                height: character1.height,
+                targetX: character2.x,
+                targetY: character2.y,
+                targetWidth: character2.width,
+                targetHeight: character2.height,
+            })
         ) {
-            // If the characters are colliding, revert the position of the character that moved
             return prevCharacters;
         }
 
@@ -85,6 +90,7 @@ export const handleAttack = (
     onAttackEnd: () => void
 ) => {
     setCharacters((prevCharacters) => {
+        const targetIndex = 1 - index;
         const newCharacters = [...prevCharacters];
         newCharacters[index].attacking = true;
         newCharacters[index].attackDirection = direction;
@@ -103,14 +109,24 @@ export const handleAttack = (
             newCharacters[index].height / 2 -
             hitboxHeight / 2;
 
-        checkCollision(
-            index,
-            hitboxX,
-            hitboxY,
-            hitboxWidth,
-            hitboxHeight,
-            setCharacters
-        );
+        if (
+            checkCollision({
+                x: hitboxX,
+                y: hitboxY,
+                width: hitboxWidth,
+                height: hitboxHeight,
+                targetX: newCharacters[targetIndex].x,
+                targetY: newCharacters[targetIndex].y,
+                targetWidth: newCharacters[targetIndex].width,
+                targetHeight: newCharacters[targetIndex].height,
+            }) &&
+            newCharacters[targetIndex].gracePeriod === 0
+        ) {
+            newCharacters[targetIndex].hp -= 20;
+            newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
+            newCharacters[targetIndex].x =
+                newCharacters[targetIndex].x + (index === 0 ? 25 : -25);
+        }
 
         onAttackEnd();
 
@@ -131,36 +147,29 @@ export const handleAttackEnd = (
     });
 };
 
-const checkCollision = (
-    attackerIndex: number,
-    hitboxX: number,
-    hitboxY: number,
-    hitboxWidth: number,
-    hitboxHeight: number,
-    setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
-) => {
-    const targetIndex = attackerIndex === 0 ? 1 : 0;
-
-    setCharacters((prevCharacters) => {
-        const target = prevCharacters[targetIndex];
-
-        if (
-            hitboxX < target.x + target.width &&
-            hitboxX + hitboxWidth > target.x &&
-            hitboxY < target.y + target.height &&
-            hitboxY + hitboxHeight > target.y
-        ) {
-            if (prevCharacters[targetIndex].gracePeriod === 0) {
-                const newCharacters = [...prevCharacters];
-                newCharacters[targetIndex].hp -= 20;
-                newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
-                newCharacters[targetIndex].x =
-                    newCharacters[targetIndex].x +
-                    (attackerIndex === 0 ? 25 : -25);
-                return newCharacters;
-            }
-        }
-
-        return prevCharacters;
-    });
+const checkCollision = ({
+    x,
+    y,
+    width,
+    height,
+    targetX,
+    targetY,
+    targetWidth,
+    targetHeight,
+}: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    targetX: number;
+    targetY: number;
+    targetWidth: number;
+    targetHeight: number;
+}) => {
+    return (
+        x < targetX + targetWidth &&
+        x + width > targetX &&
+        y < targetY + targetHeight &&
+        y + height > targetY
+    );
 };
