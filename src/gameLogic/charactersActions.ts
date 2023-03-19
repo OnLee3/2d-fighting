@@ -7,6 +7,8 @@ import { AttackDirection, Character } from '../types';
 import {
     attackAnimation,
     attackAnimation2,
+    hitAnimation,
+    hitAnimation2,
     idleAnimation,
     idleAnimation2,
     runAnimation,
@@ -20,6 +22,10 @@ export const moveCharacter = (
 ) => {
     setCharacters((prevCharacters) => {
         if (prevCharacters[index].attacking) {
+            return prevCharacters;
+        }
+
+        if (prevCharacters[index].gracePeriod >= 30) {
             return prevCharacters;
         }
 
@@ -68,6 +74,9 @@ export const moveEndCharacter = (
 ) => {
     setCharacters((prevCharacters) => {
         return prevCharacters.map((char, i) => {
+            if (char.gracePeriod >= 30) {
+                return char;
+            }
             const isCurrentCharacter = i === index;
             const isAttacking = char.attacking;
             const isCharacter1 = i === 0;
@@ -132,6 +141,9 @@ export const handleAttack = (
             newCharacters[targetIndex].gracePeriod = 60; // Set the grace period to 60 frames (1 second)
             newCharacters[targetIndex].x =
                 newCharacters[targetIndex].x + (index === 0 ? 25 : -25);
+            targetIndex === 0
+                ? (newCharacters[targetIndex].sprite = hitAnimation)
+                : (newCharacters[targetIndex].sprite = hitAnimation2);
         }
 
         onAttackEnd();
