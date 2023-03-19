@@ -2,6 +2,7 @@ import { AttackDirection, Character } from '../types';
 import {
     attackAnimation,
     attackAnimation2,
+    BACKGROUND_WIDTH,
     idleAnimation,
     idleAnimation2,
     runAnimation,
@@ -24,7 +25,10 @@ export const moveCharacter = (
                       ...char,
                       x: Math.max(
                           0,
-                          Math.min(char.x + deltaX, 928 - char.width)
+                          Math.min(
+                              char.x + deltaX,
+                              BACKGROUND_WIDTH - char.width
+                          )
                       ),
                       moving: true,
                       sprite: i === 0 ? runAnimation : runAnimation2,

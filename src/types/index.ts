@@ -16,4 +16,14 @@ export interface Character {
     sprite: Sprite;
 }
 
+export interface SpriteOptions {
+    src: string;
+    width: number;
+    height: number;
+    offsetX?: number;
+    offsetY?: number;
+    scale?: number;
+    maxFrames?: number;
+}
+
 export type AttackDirection = 'left' | 'right';
