@@ -55,7 +55,7 @@ export const useGameControls = (
                         attackTimeoutRef1.current = setTimeout(() => {
                             handleAttackEnd(0, setCharacters);
                             attackCooldowns.current.delete(0);
-                        }, 570);
+                        }, 560);
                     });
                 }
                 break;
@@ -69,7 +69,7 @@ export const useGameControls = (
                         attackTimeoutRef2.current = setTimeout(() => {
                             handleAttackEnd(1, setCharacters);
                             attackCooldowns.current.delete(1);
-                        }, 570);
+                        }, 560);
                     });
                 }
                 break;
@@ -78,7 +78,7 @@ export const useGameControls = (
         }
     };
 
-    useMultiKeyPress([
+    return useMultiKeyPress([
         {
             keys: ['a', 'd', 'ArrowLeft', 'ArrowRight'],
             keyDownCallback: handleMove,

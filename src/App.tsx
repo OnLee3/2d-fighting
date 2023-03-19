@@ -19,13 +19,16 @@ const App: React.FC = () => {
         setWinnerIndex(null);
     };
 
+    const { triggerEvents } = useGameControls(setCharacters);
+
     const update = useCallback(() => {
+        triggerEvents();
         updateCharacters(setCharacters);
         const winnerIndex = findWinner(characters);
         if (winnerIndex !== null) {
             setWinnerIndex(winnerIndex);
         }
-    }, [characters, setCharacters]);
+    }, [characters, setCharacters, triggerEvents]);
 
     const draw = useCallback(() => {
         const canvas = canvasRef.current;
@@ -41,7 +44,6 @@ const App: React.FC = () => {
     }, [characters]);
 
     useGameLoop(update, draw);
-    useGameControls(setCharacters);
 
     return (
         <div className="App">

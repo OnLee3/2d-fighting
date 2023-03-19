@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useMultiKeyPress = (
     keyBindings: Array<{
@@ -50,19 +50,15 @@ export const useMultiKeyPress = (
         };
     }, [keyBindings, pressedKeys]);
 
-    useEffect(() => {
-        const animationId = requestAnimationFrame(() => {
-            pressedKeys.forEach((key) => {
-                const binding = keyBindings.find((binding) =>
-                    binding.keys.includes(key)
-                );
-                if (binding) {
-                    binding.keyDownCallback(key);
-                }
-            });
+    const triggerEvents = useCallback(() => {
+        pressedKeys.forEach((key) => {
+            const binding = keyBindings.find((binding) =>
+                binding.keys.includes(key)
+            );
+            if (binding) {
+                binding.keyDownCallback(key);
+            }
         });
-        return () => {
-            cancelAnimationFrame(animationId);
-        };
-    }, [pressedKeys, keyBindings]);
+    }, [keyBindings, pressedKeys]);
+    return { triggerEvents };
 };
