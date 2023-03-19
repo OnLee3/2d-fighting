@@ -1,4 +1,5 @@
 import { SetStateAction, Dispatch, useRef } from 'react';
+import { GROUND_HEIGHT } from '../constants/dimensions';
 import {
     handleAttack,
     moveEndCharacter,
@@ -6,6 +7,7 @@ import {
     handleAttackEnd,
 } from '../gameLogic/charactersActions';
 import { Character } from '../types';
+import { jumpAnimation, jumpAnimation2 } from '../utils/Sprite';
 import { useMultiKeyPress } from './useMultiKeyPress';
 
 export const useGameControls = (
@@ -78,7 +80,39 @@ export const useGameControls = (
         }
     };
 
+    const handleJump = (index: number) => {
+        setCharacters((prevCharacters) => {
+            if (prevCharacters[index].attacking) {
+                return prevCharacters;
+            }
+
+            if (prevCharacters[index].gracePeriod >= 30) {
+                return prevCharacters;
+            }
+
+            if (prevCharacters[index].y >= GROUND_HEIGHT) {
+                return prevCharacters.map((char, i) =>
+                    i === index
+                        ? {
+                              ...char,
+                              velocityY: -12, // Jump strength
+                              //   sprite: i === 0 ? jumpAnimation : jumpAnimation2,
+                          }
+                        : char
+                );
+            }
+            return prevCharacters;
+        });
+    };
+
     return useMultiKeyPress([
+        {
+            keys: ['w', 'ArrowUp'],
+            keyDownCallback: (key) => {
+                const playerIndex = key === 'w' ? 0 : 1;
+                handleJump(playerIndex);
+            },
+        },
         {
             keys: ['a', 'd', 'ArrowLeft', 'ArrowRight'],
             keyDownCallback: handleMove,

@@ -3,6 +3,7 @@ import { Sprite } from '../utils/Sprite';
 export interface Character {
     x: number;
     y: number;
+    velocityY: number;
     width: number;
     height: number;
     hp: number;
