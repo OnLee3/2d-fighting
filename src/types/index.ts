@@ -5,7 +5,6 @@ export interface Character {
     y: number;
     width: number;
     height: number;
-    color: string;
     hp: number;
     attacking: boolean;
     attackDirection: AttackDirection;
