@@ -22,7 +22,7 @@ const App: React.FC = () => {
     const update = useCallback(() => {
         updateCharacters(setCharacters);
         const winnerIndex = findWinner(characters);
-        if (winnerIndex) {
+        if (winnerIndex !== null) {
             setWinnerIndex(winnerIndex);
         }
     }, [characters, setCharacters]);
