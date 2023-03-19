@@ -6,6 +6,7 @@ export const initialCharacters: Character[] = [
     {
         x: 50,
         y: 345,
+        velocityY: 0,
         width: 25,
         height: 40,
         hp: 100,
@@ -20,6 +21,7 @@ export const initialCharacters: Character[] = [
     {
         x: 700,
         y: 345,
+        velocityY: 0,
         width: 25,
         height: 40,
         hp: 100,

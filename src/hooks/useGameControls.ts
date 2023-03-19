@@ -1,4 +1,5 @@
 import { SetStateAction, Dispatch, useRef } from 'react';
+import { GROUND_HEIGHT } from '../constants/dimensions';
 import {
     handleAttack,
     moveEndCharacter,
@@ -78,7 +79,30 @@ export const useGameControls = (
         }
     };
 
+    const handleJump = (index: number) => {
+        setCharacters((prevCharacters) => {
+            if (prevCharacters[index].y >= GROUND_HEIGHT) {
+                return prevCharacters.map((char, i) =>
+                    i === index
+                        ? {
+                              ...char,
+                              velocityY: -15, // Jump strength
+                          }
+                        : char
+                );
+            }
+            return prevCharacters;
+        });
+    };
+
     return useMultiKeyPress([
+        {
+            keys: ['w', 'ArrowUp'],
+            keyDownCallback: (key) => {
+                const playerIndex = key === 'w' ? 0 : 1;
+                handleJump(playerIndex);
+            },
+        },
         {
             keys: ['a', 'd', 'ArrowLeft', 'ArrowRight'],
             keyDownCallback: handleMove,

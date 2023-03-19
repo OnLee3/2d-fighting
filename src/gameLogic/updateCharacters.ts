@@ -1,5 +1,23 @@
-// updateCharacters.ts
+import { GROUND_HEIGHT } from '../constants/dimensions';
 import { Character } from '../types';
+
+const applyGravity = (char: Character): Character => {
+    const newY = char.y + char.velocityY;
+
+    if (newY >= GROUND_HEIGHT) {
+        return {
+            ...char,
+            y: GROUND_HEIGHT,
+            velocityY: 0,
+        };
+    } else {
+        return {
+            ...char,
+            y: newY,
+            velocityY: char.velocityY + 1, // Gravity constant
+        };
+    }
+};
 
 export const updateCharacters = (
     setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
@@ -18,7 +36,7 @@ export const updateCharacters = (
 
             updatedChar.frameCounter = char.frameCounter + 1;
 
-            return updatedChar;
+            return applyGravity(updatedChar);
         })
     );
 };
