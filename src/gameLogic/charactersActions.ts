@@ -103,13 +103,11 @@ export const handleAttack = (
             index === 0 ? attackAnimation : attackAnimation2;
         const hitboxX =
             direction === 'right'
-                ? newCharacters[index].x +
-                  newCharacters[index].sprite.width / 2 +
-                  newCharacters[index].width
+                ? newCharacters[index].x + newCharacters[index].sprite.width / 2
                 : newCharacters[index].x +
                   newCharacters[index].sprite.width / 2 -
-                  newCharacters[index].width -
-                  HITBOX_WIDTH;
+                  HITBOX_WIDTH +
+                  25; // left look assets has 30px padding on the right
         const hitboxY =
             newCharacters[index].y +
             newCharacters[index].height / 2 -
