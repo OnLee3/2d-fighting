@@ -103,6 +103,10 @@ export const handleAttack = (
     onAttackEnd: () => void
 ) => {
     setCharacters((prevCharacters) => {
+        if (prevCharacters[index].gracePeriod >= 30) {
+            onAttackEnd();
+            return prevCharacters;
+        }
         const targetIndex = 1 - index;
         const newCharacters = [...prevCharacters];
         newCharacters[index].attacking = true;
