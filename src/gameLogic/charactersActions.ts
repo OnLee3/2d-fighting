@@ -58,33 +58,23 @@ export const moveEndCharacter = (
     setCharacters: React.Dispatch<React.SetStateAction<Character[]>>
 ) => {
     setCharacters((prevCharacters) => {
-        if (prevCharacters[index].attacking) {
-            return prevCharacters;
-        }
-        return prevCharacters.map((char, i) =>
-            i === index
-                ? {
-                      ...char,
-                      moving: false,
-                      sprite: char.attacking
-                          ? i === 0
-                              ? attackAnimation
-                              : attackAnimation2
-                          : i === 0
-                          ? idleAnimation
-                          : idleAnimation2,
-                  }
-                : {
-                      ...char,
-                      sprite: char.attacking
-                          ? i === 0
-                              ? attackAnimation
-                              : attackAnimation2
-                          : i === 0
-                          ? idleAnimation
-                          : idleAnimation2,
-                  }
-        );
+        return prevCharacters.map((char, i) => {
+            const isCurrentCharacter = i === index;
+            const isAttacking = char.attacking;
+            const isCharacter1 = i === 0;
+
+            return {
+                ...char,
+                moving: isCurrentCharacter ? false : char.moving,
+                sprite: isAttacking
+                    ? isCharacter1
+                        ? attackAnimation
+                        : attackAnimation2
+                    : isCharacter1
+                    ? idleAnimation
+                    : idleAnimation2,
+            };
+        });
     });
 };
 
