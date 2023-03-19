@@ -55,7 +55,7 @@ export const useGameControls = (
                         attackTimeoutRef1.current = setTimeout(() => {
                             handleAttackEnd(0, setCharacters);
                             attackCooldowns.current.delete(0);
-                        }, 560);
+                        }, 500);
                     });
                 }
                 break;
@@ -69,7 +69,7 @@ export const useGameControls = (
                         attackTimeoutRef2.current = setTimeout(() => {
                             handleAttackEnd(1, setCharacters);
                             attackCooldowns.current.delete(1);
-                        }, 560);
+                        }, 500);
                     });
                 }
                 break;
