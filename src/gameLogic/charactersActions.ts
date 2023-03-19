@@ -1,8 +1,12 @@
+import {
+    BACKGROUND_WIDTH,
+    HITBOX_HEIGHT,
+    HITBOX_WIDTH,
+} from '../constants/dimensions';
 import { AttackDirection, Character } from '../types';
 import {
     attackAnimation,
     attackAnimation2,
-    BACKGROUND_WIDTH,
     idleAnimation,
     idleAnimation2,
     runAnimation,
@@ -98,23 +102,21 @@ export const handleAttack = (
         newCharacters[index].sprite =
             index === 0 ? attackAnimation : attackAnimation2;
 
-        const hitboxWidth = 120;
-        const hitboxHeight = 10;
         const hitboxX =
             direction === 'right'
                 ? newCharacters[index].x + newCharacters[index].width
-                : newCharacters[index].x - hitboxWidth;
+                : newCharacters[index].x - HITBOX_WIDTH;
         const hitboxY =
             newCharacters[index].y +
             newCharacters[index].height / 2 -
-            hitboxHeight / 2;
+            HITBOX_HEIGHT / 2;
 
         if (
             checkCollision({
                 x: hitboxX,
                 y: hitboxY,
-                width: hitboxWidth,
-                height: hitboxHeight,
+                width: HITBOX_WIDTH,
+                height: HITBOX_HEIGHT,
                 targetX: newCharacters[targetIndex].x,
                 targetY: newCharacters[targetIndex].y,
                 targetWidth: newCharacters[targetIndex].width,

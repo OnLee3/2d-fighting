@@ -5,11 +5,8 @@ import { drawCharacters } from './utils/drawCharacters';
 import { useGameLoop } from './hooks/useGameLoop';
 import { useGameControls } from './hooks/useGameControls';
 import { updateCharacters } from './gameLogic/updateCharacters';
-import {
-    backgroundSprite,
-    BACKGROUND_HEIGHT,
-    BACKGROUND_WIDTH,
-} from './utils/Sprite';
+import { backgroundSprite } from './utils/Sprite';
+import { BACKGROUND_HEIGHT, BACKGROUND_WIDTH } from './constants/dimensions';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);

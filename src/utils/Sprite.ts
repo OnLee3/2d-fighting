@@ -6,6 +6,20 @@ import backgroundImage from '../../assets/Background.png';
 import attack from '../../assets/_Attack.png';
 import attack2 from '../../assets/_Attack_2.png';
 import { SpriteOptions } from '../types';
+import { BACKGROUND_HEIGHT, BACKGROUND_WIDTH } from '../constants/dimensions';
+import {
+    ATTACK_SPRITE_HEIGHT,
+    ATTACK_SPRITE_MAX_FRAME,
+    ATTACK_SPRITE_SCALE,
+    ATTACK_SPRITE_WIDTH,
+    IDLE_SPRITE_2_OFFSET_X,
+    IDLE_SPRITE_MAX_FRAME,
+    IDLE_SPRITE_OFFSET_X,
+    IDLE_SPRITE_OFFSET_Y,
+    IDLE_SPRITE_WIDTH,
+    IDLE_SPRIT_HEIGHT,
+    IDLE_SPRIT_SCALE,
+} from '../constants/sprites';
 
 export class Sprite {
     image: HTMLImageElement;
@@ -52,22 +66,6 @@ export class Sprite {
         ctx.restore();
     }
 }
-
-export const BACKGROUND_WIDTH = 928;
-export const BACKGROUND_HEIGHT = 500;
-
-export const IDLE_SPRITE_WIDTH = 120;
-export const IDLE_SPRIT_HEIGHT = 80;
-export const IDLE_SPRIT_SCALE = 2;
-export const IDLE_SPRITE_OFFSET_X = 20; // Adjust these values based on the actual padding in the sprite image
-export const IDLE_SPRITE_OFFSET_Y = 40;
-export const IDLE_SPRITE_2_OFFSET_X = -10; // Adjust these values based on the actual padding in the sprite image
-export const IDLE_SPRITE_MAX_FRAME = 10; // Adjust these values based on the actual padding in the sprite image
-
-const ATTACK_SPRITE_WIDTH = 120;
-const ATTACK_SPRITE_HEIGHT = 80;
-const ATTACK_SPRITE_SCALE = 2;
-const ATTACK_SPRITE_MAX_FRAME = 6;
 
 export const backgroundSprite = new Sprite({
     src: backgroundImage,
