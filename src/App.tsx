@@ -22,12 +22,14 @@ const App: React.FC = () => {
     const { triggerEvents } = useGameControls(setCharacters);
 
     const update = useCallback(() => {
-        triggerEvents();
-        updateCharacters(setCharacters);
         const winnerIndex = findWinner(characters);
         if (winnerIndex !== null) {
             setWinnerIndex(winnerIndex);
         }
+        if (winnerIndex === null) {
+            triggerEvents();
+        }
+        updateCharacters(setCharacters);
     }, [characters, setCharacters, triggerEvents]);
 
     const draw = useCallback(() => {

@@ -15,7 +15,7 @@ export const drawCharacters = (
         }
         /** HP */
         ctx.fillStyle = 'white';
-        ctx.fillText(`HP: ${char.hp}`, char.x, char.y - 10);
+        ctx.fillText(`HP: ${char.hp}`, char.x + char.sprite.width, char.y - 10);
 
         /** attack hitbox */
         // if (char.attacking) {
