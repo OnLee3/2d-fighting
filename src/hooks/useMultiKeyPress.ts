@@ -8,24 +8,28 @@ export const useMultiKeyPress = (
     }>
 ) => {
     const [pressedKeys, setPressedKeys] = useState(new Set<string>());
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent) => {
             const binding = keyBindings.find((binding) =>
                 binding.keys.includes(event.key)
             );
-            if (binding && !pressedKeys.has(event.key)) {
+
+            setPressedKeys((prevPressedKeys) => {
                 event.stopPropagation();
                 event.preventDefault();
-                setPressedKeys((prevPressedKeys) => {
+                if (binding && !prevPressedKeys.has(event.key)) {
                     const newPressedKeys = new Set(prevPressedKeys);
                     newPressedKeys.add(event.key);
                     return newPressedKeys;
-                });
-            }
-        };
+                }
+                return prevPressedKeys;
+            });
+        },
+        [keyBindings]
+    );
 
-        const handleKeyUp = (event: KeyboardEvent) => {
+    const handleKeyUp = useCallback(
+        (event: KeyboardEvent) => {
             const binding = keyBindings.find((binding) =>
                 binding.keys.includes(event.key)
             );
@@ -39,8 +43,11 @@ export const useMultiKeyPress = (
                     return newPressedKeys;
                 });
             }
-        };
+        },
+        [keyBindings]
+    );
 
+    useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
 
@@ -48,7 +55,7 @@ export const useMultiKeyPress = (
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         };
-    }, [keyBindings, pressedKeys]);
+    }, [handleKeyDown, handleKeyUp]);
 
     const triggerEvents = useCallback(() => {
         pressedKeys.forEach((key) => {

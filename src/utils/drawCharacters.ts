@@ -1,4 +1,3 @@
-import { HITBOX_HEIGHT, HITBOX_WIDTH } from '../constants/dimensions';
 import { Character } from '../types';
 
 export const drawCharacters = (

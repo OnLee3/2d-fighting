@@ -8,6 +8,7 @@ import { updateCharacters } from './gameLogic/updateCharacters';
 import { backgroundSprite } from './utils/Sprite';
 import { BACKGROUND_HEIGHT, BACKGROUND_WIDTH } from './constants/dimensions';
 import { findWinner } from './gameLogic/findWinner';
+import { FRAME_RATE } from './constants/rendering';
 
 const App: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -45,7 +46,7 @@ const App: React.FC = () => {
         drawCharacters(ctx, characters);
     }, [characters]);
 
-    useGameLoop(update, draw);
+    useGameLoop(update, draw, FRAME_RATE);
 
     return (
         <div className="App">
